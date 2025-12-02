@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home — For My Love</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="top-nav">
+  <div class="logo">💖 My Love</div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="account-icon" id="accountBtn">👤</div>
+</header>
+
+<!-- Film Roll Slider -->
+<section class="film-slider">
+  <div class="slider-container" id="filmRoll">
+    <div class="slider-box" data-page="videos.html">🎬<p>Videos</p></div>
+    <div class="slider-box" data-page="photos.html">📸<p>Photos</p></div>
+    <div class="slider-box" data-page="photobooth.html">🎞️<p>PhotoBooth</p></div>
+    <div class="slider-box" data-page="game1.html">💌<p>Game1</p></div>
+    <div class="slider-box" data-page="game2.html">💖<p>Game2</p></div>
+    <div class="slider-box" data-page="game3.html">🎭<p>Game3</p></div>
+    <div class="slider-box" data-page="loveletter.html">💌<p>Love Letter</p></div>
+  </div>
+</section>
+
+<!-- Logout Modal -->
+<div id="logoutModal" class="modal">
+  <div class="modal-content">
+    <h2>Are you going to leave me, my love? 💖</h2>
+    <div class="modal-buttons">
+      <button id="logoutYes">Yes</button>
+      <button id="logoutNo">No</button>
+      <button id="logoutStay">I’m not gonna leave you</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script>
+// Film Roll Slider Navigation
+document.querySelectorAll('.slider-box').forEach(box=>{
+  box.addEventListener('click',()=>location.href=box.dataset.page);
+});
+
+// Logout Modal
+const logoutModal=document.getElementById('logoutModal');
+const accountBtn=document.getElementById('accountBtn');
+accountBtn.addEventListener('click',()=>logoutModal.style.display='flex');
+document.getElementById('logoutYes').addEventListener('click',()=>{
+  AUTH.logout(); location.href='index.html';
+});
+document.getElementById('logoutNo').addEventListener('click',()=>logoutModal.style.display='none');
+document.getElementById('logoutStay').addEventListener('click',()=>window.close());
+</script>
+</body>
+</html>
