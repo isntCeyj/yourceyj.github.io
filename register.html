@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register — For My Love</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="auth-page">
+<main class="auth-card">
+<h1>Create Account 💌</h1>
+<form id="registerForm" class="form">
+  <label>Name<input type="text" id="regName" required></label>
+  <label>Email<input type="email" id="regEmail" required></label>
+  <label>Password<input type="password" id="regPass" required minlength="4"></label>
+  <div class="row">
+    <button type="submit" class="btn primary">Register</button>
+    <a class="btn ghost" href="index.html">Back to Login</a>
+  </div>
+</form>
+</main>
+<script src="assets/js/app.js"></script>
+<script>
+document.getElementById('registerForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name=document.getElementById('regName').value.trim();
+  const email=document.getElementById('regEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('regPass').value;
+  const res=AUTH.register(name,email,pass);
+  if(res.success) { alert("Registered!"); location.href='index.html'; }
+  else alert(res.message);
+});
+</script>
+</body>
+</html>
