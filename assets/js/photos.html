@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photos — My Love</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="top-nav">
+  <div class="logo">💖 My Love</div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="photos-page">
+  <h1>Memories 📸</h1>
+  <div class="holder" id="photoHolder">
+    <p>Drag your memories here</p>
+  </div>
+  <input type="file" id="photoUpload" multiple>
+  <div class="photo-grid" id="photoGrid"></div>
+</section>
+
+<script src="assets/js/app.js"></script>
+<script>
+// Photo upload + drag-drop
+const upload=document.getElementById('photoUpload');
+const grid=document.getElementById('photoGrid');
+const holder=document.getElementById('photoHolder');
+
+upload.addEventListener('change',e=>{
+  Array.from(e.target.files).forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=function(ev){
+      const img=document.createElement('img');
+      img.src=ev.target.result;
+      img.draggable=true;
+      grid.appendChild(img);
+      img.addEventListener('dragstart',dragStart);
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+function dragStart(e){
+  e.dataTransfer.setData('text/plain', e.target.src);
+}
+holder.addEventListener('dragover',e=>e.preventDefault());
+holder.addEventListener('drop',e=>{
+  e.preventDefault();
+  const src=e.dataTransfer.getData('text/plain');
+  const img=document.createElement('img');
+  img.src=src;
+  holder.appendChild(img);
+});
+</script>
+</body>
+</html>
