@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game 3 — Look-alike Cartoon</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="top-nav">
+  <div class="logo">💖 My Love</div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="game-page">
+  <h1>Look-alike Cartoon 🎭</h1>
+  <input type="file" id="lookUpload">
+  <canvas id="lookCanvas" width="400" height="300"></canvas>
+  <div>
+    <textarea id="review" placeholder="Write your review here..."></textarea>
+  </div>
+  <button id="restartGame">Restart Game</button>
+  <button id="finishGame">Finish</button>
+</section>
+
+<script src="assets/js/app.js"></script>
+<script>
+const lookUpload=document.getElementById('lookUpload');
+const lookCanvas=document.getElementById('lookCanvas');
+const ctx=lookCanvas.getContext('2d');
+let lookImg=new Image();
+
+lookUpload.addEventListener('change',e=>{
+  const reader=new FileReader();
+  reader.onload=function(ev){ lookImg.src=ev.target.result; }
+  reader.readAsDataURL(e.target.files[0]);
+});
+
+lookImg.onload=function(){ ctx.clearRect(0,0,lookCanvas.width,lookCanvas.height); ctx.drawImage(lookImg,0,0,lookCanvas.width,lookCanvas.height); }
+
+// Restart Game
+document.getElementById('restartGame').addEventListener('click',()=>{
+  ctx.clearRect(0,0,lookCanvas.width,lookCanvas.height);
+  document.getElementById('review').value='';
+});
+
+// Finish Game
+document.getElementById('finishGame').addEventListener('click',()=>{
+  alert("Thanks for playing! Returning home ❤️");
+  location.href='home.html';
+});
+</script>
+</body>
+</html>
