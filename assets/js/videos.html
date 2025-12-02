@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Videos — My Love</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="top-nav">
+  <div class="logo">💖 My Love</div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="videos-page">
+  <h1>Our Memories 🎬</h1>
+  <div class="video-slider" id="videoSlider">
+    <div class="video-box" data-src="assets/img/video1.mp4">
+      <video muted loop src="assets/img/video1.mp4"></video>
+      <p>Video 1</p>
+    </div>
+    <div class="video-box" data-src="assets/img/video2.mp4">
+      <video muted loop src="assets/img/video2.mp4"></video>
+      <p>Video 2</p>
+    </div>
+    <div class="video-box" data-src="assets/img/video3.mp4">
+      <video muted loop src="assets/img/video3.mp4"></video>
+      <p>Video 3</p>
+    </div>
+  </div>
+</section>
+
+<!-- Video popup -->
+<div id="videoPopup" class="modal">
+  <div class="modal-content">
+    <video id="popupVid" controls autoplay></video>
+    <button id="closeVideo">Close</button>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script>
+// Video box click to popup
+document.querySelectorAll('.video-box').forEach(box=>{
+  box.addEventListener('click',()=>{
+    const src=box.dataset.src;
+    const popup=document.getElementById('videoPopup');
+    const vid=document.getElementById('popupVid');
+    vid.src=src;
+    popup.style.display='flex';
+  });
+});
+document.getElementById('closeVideo').addEventListener('click',()=>{
+  document.getElementById('videoPopup').style.display='none';
+  document.getElementById('popupVid').pause();
+});
+</script>
+</body>
+</html>
