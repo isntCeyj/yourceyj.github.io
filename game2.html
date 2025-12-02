@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game 2 — Memories Gift</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="top-nav">
+  <div class="logo">💖 My Love</div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="game-page">
+  <h1>Upload Your Memories 💖</h1>
+  <input type="file" id="memUpload" multiple>
+  <div id="memGrid" class="photo-grid"></div>
+</section>
+
+<!-- Gift popup -->
+<div id="giftBox2" class="modal">
+  <div class="modal-content">
+    <h2>💖 Here's My Gift!</h2>
+    <button id="openGift2">Open Gift</button>
+    <div id="giftResult2" style="display:none;">
+      <p>I love youuu! Happy monthsary 💖</p>
+      <p>😘💋</p>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script>
+// Upload memories + display
+const memUpload=document.getElementById('memUpload');
+const memGrid=document.getElementById('memGrid');
+memUpload.addEventListener('change',e=>{
+  Array.from(e.target.files).forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=function(ev){
+      const img=document.createElement('img');
+      img.src=ev.target.result;
+      memGrid.appendChild(img);
+    }
+    reader.readAsDataURL(file);
+  });
+});
+
+// Gift popup
+document.getElementById('openGift2').addEventListener('click',()=>{
+  document.getElementById('giftResult2').style.display='block';
+  document.getElementById('openGift2').style.display='none';
+});
+</script>
+</body>
+</html>
