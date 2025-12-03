@@ -1,34 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register — For My Love</title>
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yourceyj — Register</title>
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="auth-page">
-<main class="auth-card">
-<h1>Create Account 💌</h1>
-<form id="registerForm" class="form">
-  <label>Name<input type="text" id="regName" required></label>
-  <label>Email<input type="email" id="regEmail" required></label>
-  <label>Password<input type="password" id="regPass" required minlength="4"></label>
+<body>
+<header class="top-nav">
+  <div class="brand"><div class="logo"></div><div style="font-weight:700;color:var(--accent);margin-left:8px">Yourceyj</div></div>
+  <nav><a href="home.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+
+<div class="glass-wrap" style="max-width:520px;margin:120px auto">
+  <div class="brand-title">Create Account</div>
+  <p class="small">Make a simple local account for this browser</p>
+
+  <div class="form-row"><input id="regName" class="input" placeholder="Display name"></div>
+  <div class="form-row"><input id="regEmail" class="input" placeholder="Email"></div>
+  <div class="form-row"><input id="regPass" class="input" placeholder="Password" type="password"></div>
+
   <div class="row">
-    <button type="submit" class="btn primary">Register</button>
-    <a class="btn ghost" href="index.html">Back to Login</a>
+    <button id="regBtn" class="heart-btn">Register</button>
+    <a href="index.html" class="link-small">Back to login</a>
   </div>
-</form>
-</main>
+</div>
+
 <script src="assets/js/app.js"></script>
 <script>
-document.getElementById('registerForm').addEventListener('submit', e=>{
-  e.preventDefault();
-  const name=document.getElementById('regName').value.trim();
-  const email=document.getElementById('regEmail').value.trim().toLowerCase();
-  const pass=document.getElementById('regPass').value;
-  const res=AUTH.register(name,email,pass);
-  if(res.success) { alert("Registered!"); location.href='index.html'; }
-  else alert(res.message);
+document.getElementById('regBtn').addEventListener('click', ()=>{
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim().toLowerCase();
+  const pass = document.getElementById('regPass').value;
+  if(!name||!email||!pass) return alert('Please fill all fields');
+  const res = AUTH.register(name,email,pass);
+  if(res.ok) { alert('Account created!'); location.href='index.html'; }
+  else alert(res.msg);
 });
 </script>
 </body>
