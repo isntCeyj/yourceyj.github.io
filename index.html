@@ -1,34 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login — For My Love</title>
-<link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Yourceyj — Login</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="auth-page">
-<main class="auth-card">
-  <h1>Welcome 💖</h1>
-  <form id="loginForm" class="form">
-    <label>Email<input type="email" id="loginEmail" required></label>
-    <label>Password<input type="password" id="loginPass" required></label>
-    <div class="row">
-      <button type="submit" class="btn primary">Login</button>
-      <a class="btn ghost" href="register.html">Register</a>
-    </div>
-  </form>
-</main>
+<body>
+<header class="top-nav">
+  <div class="brand"><div class="logo"></div><div style="font-weight:700;color:var(--accent);margin-left:8px">Yourceyj</div></div>
+  <nav><a href="home.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+
+<div class="glass-wrap" style="max-width:520px;margin:120px auto">
+  <div class="brand-title">Yourceyj</div>
+  <p class="small" style="margin-top:8px">Welcome back — this place is made just for you.</p>
+
+  <div class="form-row">
+    <input id="loginEmail" class="input" placeholder="Email" type="text">
+  </div>
+  <div class="form-row">
+    <input id="loginPass" class="input" placeholder="Password" type="password">
+  </div>
+
+  <div class="row">
+    <button id="loginBtn" class="heart-btn">Login</button>
+    <a href="register.html" class="link-small">Register</a>
+  </div>
+</div>
+
 <script src="assets/js/app.js"></script>
 <script>
-document.getElementById('loginForm').addEventListener('submit', e=>{
-  e.preventDefault();
-  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-  const pass = document.getElementById('loginPass').value;
-  const res = AUTH.login(email, pass);
-  if(res.success) location.href='home.html';
-  else alert(res.message);
+document.getElementById('loginBtn').addEventListener('click', ()=>{
+  const e = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const p = document.getElementById('loginPass').value;
+  const r = AUTH.login(e,p);
+  if(r.ok) location.href='home.html';
+  else alert(r.msg || 'Login failed');
 });
-AUTH.seedDemo();
 </script>
 </body>
 </html>
