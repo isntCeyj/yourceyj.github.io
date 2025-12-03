@@ -1,58 +1,285 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game 3 — Look-alike Cartoon</title>
-<link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Look-Alike Game — Yourceyj</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* small page-specific tweaks */
+    .game-wrap{max-width:980px;margin:110px auto 80px;padding:18px}
+    .prompt-card{display:flex;gap:18px;align-items:center;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));box-shadow:0 12px 30px rgba(0,0,0,0.5)}
+    .character{width:360px;height:360px;border-radius:10px;overflow:hidden;border:6px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;background:#000}
+    .character img{max-width:100%;max-height:100%;display:block}
+    .upload-column{flex:1}
+    .upload-column .hint{color:rgba(255,255,255,0.8);margin-bottom:8px}
+    .upload-preview{width:220px;height:220px;border-radius:10px;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px dashed rgba(255,255,255,0.04)}
+    .controls{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--muted)}
+    .review-list{margin-bottom:12px}
+    .review-card{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;margin-bottom:8px}
+    .small-note{font-size:13px;color:rgba(255,255,255,0.7);margin-top:8px}
+  </style>
 </head>
 <body>
-<header class="top-nav">
-  <div class="logo">💖 My Love</div>
-  <nav>
-    <a href="home.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <header class="top-nav">
+    <div class="brand"><div class="logo"></div><div style="font-weight:700;color:var(--accent);margin-left:8px">Yourceyj</div></div>
+    <nav><a href="home.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+  </header>
 
-<section class="game-page">
-  <h1>Look-alike Cartoon 🎭</h1>
-  <input type="file" id="lookUpload">
-  <canvas id="lookCanvas" width="400" height="300"></canvas>
-  <div>
-    <textarea id="review" placeholder="Write your review here..."></textarea>
+  <main class="game-wrap">
+    <section class="section">
+      <h2>Look-Alike Challenge 🎭</h2>
+      <p class="small">Look at the character below. Upload a photo of you/you two that looks like the character. After 10 uploads, write your review and open the gift!</p>
+
+      <!-- Saved reviews (top) -->
+      <div id="reviews" class="review-list"></div>
+
+      <!-- prompt + upload -->
+      <div class="prompt-card">
+        <div class="character" id="characterBox" title="Character image">
+          <img id="characterImg" src="" alt="character">
+        </div>
+
+        <div class="upload-column">
+          <div class="hint">Upload your look-alike photo for:</div>
+          <div id="charName" style="font-weight:800;font-size:20px;margin-bottom:8px"></div>
+
+          <input id="uploadInput" type="file" accept="image/*" class="input" />
+          <div style="height:12px"></div>
+
+          <div class="upload-preview" id="uploadPreview">
+            <div class="small" style="text-align:center;color:rgba(255,255,255,0.6)">No image uploaded</div>
+          </div>
+
+          <div class="controls">
+            <button id="nextBtn" class="heart-btn">Next</button>
+            <button id="restartBtn" class="btn-ghost">Restart</button>
+            <button id="finishBtn" class="btn-ghost">Finish</button>
+          </div>
+
+          <div class="small-note">You can restart anytime to try again — reviews will remain saved.</div>
+        </div>
+      </div>
+
+      <!-- after finish: review box -->
+      <div id="reviewArea" class="section hidden" style="margin-top:18px;">
+        <h3>Tell me how it felt ❤️</h3>
+        <textarea id="reviewText" class="input" rows="4" placeholder="Write a short review about playing the game..."></textarea>
+        <div style="display:flex;gap:10px;margin-top:8px">
+          <button id="saveReview" class="heart-btn">Save Review</button>
+          <button id="closeReview" class="btn-ghost">Back to Home</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- gift modal (shared style with site) -->
+  <div id="giftModal" class="modal">
+    <div class="box">
+      <h3>How awesome you are my love</h3>
+      <div id="giftBox" class="gift">🎁</div>
+      <div id="kissText" class="kiss" style="display:none">😘 I love youuu!</div>
+      <div style="margin-top:10px"><button id="closeGift" class="heart-btn">Close</button></div>
+    </div>
   </div>
-  <button id="restartGame">Restart Game</button>
-  <button id="finishGame">Finish</button>
-</section>
 
-<script src="assets/js/app.js"></script>
+  <div id="confetti"></div>
+
 <script>
-const lookUpload=document.getElementById('lookUpload');
-const lookCanvas=document.getElementById('lookCanvas');
-const ctx=lookCanvas.getContext('2d');
-let lookImg=new Image();
+/* Game 3: Look-Alike — self-contained script (uses localStorage) */
 
-lookUpload.addEventListener('change',e=>{
-  const reader=new FileReader();
-  reader.onload=function(ev){ lookImg.src=ev.target.result; }
-  reader.readAsDataURL(e.target.files[0]);
+/* Utility: build SVG data URL for simple meme-like placeholders */
+function svgDataUrl(title, emoji, bg, color){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'>
+    <rect width='100%' height='100%' fill='${bg}' rx='30'/>
+    <g transform='translate(40,120)'>
+      <text x='0' y='0' font-family='Inter, Arial' font-size='60' fill='${color}' font-weight='700'>${emoji} ${title}</text>
+    </g>
+    <g transform='translate(40,220)'>
+      <text x='0' y='0' font-family='Inter, Arial' font-size='34' fill='rgba(255,255,255,0.85)'>Meme style prompt — upload your look-alike</text>
+    </g>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+/* Character list (10) - meme-like versions */
+const characters = [
+  {id:'c1', name:'Donkey (confused)', src: svgDataUrl('Donkey','😕','#5b8fb8','#001f3f')},
+  {id:'c2', name:'Rapunzel', src: svgDataUrl('Rapunzel','🌸','#f7c6d3','#2b0735')},
+  {id:'c3', name:'Flynn Rider', src: svgDataUrl('Flynn Rider','😏','#d1c7ff','#2b0b3a')},
+  {id:'c4', name:'Stitch', src: svgDataUrl('Stitch','💙','#5dd3c3','#003b33')},
+  {id:'c5', name:'Rapunzel + Flynn', src: svgDataUrl('Rapunzel & Flynn','💑','#ffd6a5','#3b1a00')},
+  {id:'c6', name:'Red (Angry Bird)', src: svgDataUrl('Red (angry)','😡','#ff6f61','#3b0000')},
+  {id:'c7', name:'Minion', src: svgDataUrl('Minion','😜','#ffe066','#2b2200')},
+  {id:'c8', name:'Cute Baby', src: svgDataUrl('Cute Baby','👶','#d9f7e8','#003823')},
+  {id:'c9', name:'Fiona', src: svgDataUrl('Fiona','👑','#c8f0ff','#001d25')},
+  {id:'c10', name:'Barney', src: svgDataUrl('Barney','🦖','#b28fd9','#1b0636')}
+];
+
+/* Storage keys */
+const KEY_UPLOADS = 'yl_lookalike_uploads_v1';
+const KEY_REVIEWS = 'yl_lookalike_reviews_v1';
+
+/* State */
+let idx = 0;
+let uploads = JSON.parse(localStorage.getItem(KEY_UPLOADS) || '[]');
+
+/* DOM */
+const characterImg = document.getElementById('characterImg');
+const charNameEl = document.getElementById('charName');
+const uploadInput = document.getElementById('uploadInput');
+const uploadPreview = document.getElementById('uploadPreview');
+const nextBtn = document.getElementById('nextBtn');
+const restartBtn = document.getElementById('restartBtn');
+const finishBtn = document.getElementById('finishBtn');
+const reviewsEl = document.getElementById('reviews');
+const reviewArea = document.getElementById('reviewArea');
+const reviewText = document.getElementById('reviewText');
+const saveReviewBtn = document.getElementById('saveReview');
+const closeReviewBtn = document.getElementById('closeReview');
+const giftModal = document.getElementById('giftModal');
+const giftBox = document.getElementById('giftBox');
+const closeGift = document.getElementById('closeGift');
+const kissText = document.getElementById('kissText');
+
+/* load saved uploads if any (ensure length 10) */
+function ensureUploads(){
+  uploads = JSON.parse(localStorage.getItem(KEY_UPLOADS) || '[]');
+  // make sure it's an array with up to 10 items
+  if(!Array.isArray(uploads)) uploads = [];
+  // keep existing entries, fill rest with nulls
+  while(uploads.length < characters.length) uploads.push(null);
+  if(uploads.length > characters.length) uploads = uploads.slice(0, characters.length);
+  localStorage.setItem(KEY_UPLOADS, JSON.stringify(uploads));
+}
+ensureUploads();
+
+/* render reviews list */
+function renderReviews(){
+  const arr = JSON.parse(localStorage.getItem(KEY_REVIEWS) || '[]');
+  reviewsEl.innerHTML = '';
+  if(!arr.length) {
+    const p = document.createElement('div'); p.className='small'; p.textContent = 'No reviews yet — your future reviews will appear here.';
+    reviewsEl.appendChild(p);
+    return;
+  }
+  arr.slice().reverse().forEach(r=>{
+    const c = document.createElement('div'); c.className='review-card';
+    c.innerHTML = `<strong>${r.name || 'You'}</strong> <div class="small" style="margin-top:6px">${r.text}</div><div class="small" style="margin-top:6px;color:rgba(255,255,255,0.6)">${new Date(r.t).toLocaleString()}</div>`;
+    reviewsEl.appendChild(c);
+  });
+}
+renderReviews();
+
+/* show character */
+function showCharacter(i){
+  idx = i;
+  const c = characters[i];
+  characterImg.src = c.src;
+  charNameEl.textContent = `${i+1}. ${c.name}`;
+  // show existing upload if present
+  const data = uploads[i];
+  if(data){
+    uploadPreview.innerHTML = `<img src="${data}" style="width:100%;height:100%;object-fit:cover">`;
+  } else {
+    uploadPreview.innerHTML = `<div class="small" style="text-align:center;color:rgba(255,255,255,0.6);padding:8px">No image uploaded yet</div>`;
+  }
+}
+showCharacter(0);
+
+/* handle upload */
+uploadInput.addEventListener('change', e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    uploads[idx] = ev.target.result; // dataURL
+    localStorage.setItem(KEY_UPLOADS, JSON.stringify(uploads));
+    uploadPreview.innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover">`;
+  };
+  reader.readAsDataURL(f);
 });
 
-lookImg.onload=function(){ ctx.clearRect(0,0,lookCanvas.width,lookCanvas.height); ctx.drawImage(lookImg,0,0,lookCanvas.width,lookCanvas.height); }
-
-// Restart Game
-document.getElementById('restartGame').addEventListener('click',()=>{
-  ctx.clearRect(0,0,lookCanvas.width,lookCanvas.height);
-  document.getElementById('review').value='';
+/* Next */
+nextBtn.addEventListener('click', ()=>{
+  // advance, but ensure we save placeholder if none
+  if(idx < characters.length - 1){
+    showCharacter(idx+1);
+  } else {
+    // reached end -> show finish area
+    showFinishStep();
+  }
 });
 
-// Finish Game
-document.getElementById('finishGame').addEventListener('click',()=>{
-  alert("Thanks for playing! Returning home ❤️");
-  location.href='home.html';
+/* Restart: clear current playthrough uploads (not reviews) */
+restartBtn.addEventListener('click', ()=>{
+  if(!confirm('Restart the game? This will clear your current look-alike uploads for this run (reviews will stay).')) return;
+  uploads = Array(characters.length).fill(null);
+  localStorage.setItem(KEY_UPLOADS, JSON.stringify(uploads));
+  showCharacter(0);
+  alert('Restarted. You can re-upload images now.');
 });
+
+/* Finish */
+finishBtn.addEventListener('click', ()=>{
+  showFinishStep();
+});
+
+function showFinishStep(){
+  // reveal review area
+  reviewArea.classList.remove('hidden');
+  // scroll to review area
+  reviewArea.scrollIntoView({behavior:'smooth'});
+}
+
+/* Save review (keeps timestamp) */
+saveReviewBtn.addEventListener('click', ()=>{
+  const text = (reviewText.value || '').trim();
+  if(!text) return alert('Write a short review, please.');
+  const arr = JSON.parse(localStorage.getItem(KEY_REVIEWS) || '[]');
+  arr.push({text, t: Date.now(), name: (AUTH && AUTH.current && AUTH.current().name) || 'You'});
+  localStorage.setItem(KEY_REVIEWS, JSON.stringify(arr));
+  reviewText.value = '';
+  renderReviews();
+  // open gift modal
+  openGiftModal();
+});
+
+/* Close review (finish) */
+closeReviewBtn.addEventListener('click', ()=> location.href = 'home.html');
+
+/* Gift modal behavior */
+function openGiftModal(){
+  giftModal.classList.add('open');
+  kissText.style.display = 'none';
+}
+/* inner gift click — explosion effect */
+giftBox.addEventListener('click', ()=>{
+  // animate small scale then reveal kiss + confetti
+  giftBox.animate([{transform:'scale(1)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:420});
+  // show kiss
+  kissText.style.display = 'block';
+  // confetti
+  for(let i=0;i<40;i++){
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = Math.random()*100+'%';
+    el.style.width = (6+Math.random()*8)+'px';
+    el.style.height = (10+Math.random()*12)+'px';
+    el.style.background = ['#ff6f91','#ffd6e8','#ffd166','#6be7ff'][Math.floor(Math.random()*4)];
+    document.body.appendChild(el);
+    const dur = 1400 + Math.random()*900;
+    el.animate([{transform:'translateY(0) rotate(0)', opacity:1},{transform:`translateY(${700+Math.random()*300}px) rotate(${Math.random()*720}deg)`,opacity:0}], {duration:dur, easing:'cubic-bezier(.2,.8,.2,1)'});
+    setTimeout(()=>el.remove(), dur+80);
+  }
+});
+closeGift.addEventListener('click', ()=> giftModal.classList.remove('open'));
+
+/* On load: ensure any missing uploads array is correct */
+ensureUploads();
+renderReviews();
+
 </script>
 </body>
 </html>
