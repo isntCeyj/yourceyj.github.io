@@ -1,0 +1,117 @@
+/* assets/css/style.css
+   Unified professional + romantic UI
+*/
+:root{
+  --bg1: linear-gradient(180deg,#071224 0%, #0b2540 100%);
+  --accent:#ff6f91;
+  --accent-2:#ffd6e8;
+  --glass: rgba(255,255,255,0.06);
+  --muted: rgba(255,255,255,0.78);
+  --card-shadow: 0 12px 35px rgba(2,6,23,0.6);
+  --radius:16px;
+  --maxW:1200px;
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  color:#fff;
+  background: var(--bg1);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.4;
+}
+
+/* NAV */
+.top-nav{
+  height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  position:fixed;
+  left:0;right:0;top:0;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  z-index:60;
+}
+.top-nav .logo{display:flex;align-items:center;gap:12px}
+.top-nav .logo .brand{
+  width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#f97316);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:20px;box-shadow:var(--card-shadow)
+}
+.top-nav nav{display:flex;gap:18px;align-items:center}
+.top-nav nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px}
+.top-nav nav a:hover{background:var(--glass);color:#fff}
+
+/* Container */
+.container{max-width:var(--maxW);margin:110px auto 60px;padding:20px}
+
+/* Hero / film roll S slider */
+.film-hero{
+  display:flex;flex-direction:column;gap:18px;align-items:center;
+}
+.film-title{font-size:28px;margin-bottom:6px}
+.film-sub{color:rgba(255,255,255,0.75);font-size:14px;margin-bottom:14px}
+
+/* film roll wrapper */
+.film-wrap{position:relative;width:100%;height:260px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:14px}
+.film-track{display:flex;gap:20px;align-items:center;transition:transform .45s cubic-bezier(.2,.8,.2,1);will-change:transform;padding:20px}
+.film-item{
+  width:220px;height:240px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow:var(--card-shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;cursor:pointer;position:relative;transform-origin:center;transition:transform .3s, box-shadow .3s;
+  border:1px solid rgba(255,255,255,0.03);
+}
+.film-item .icon{font-size:40px;margin-bottom:10px}
+.film-item p{margin:0;font-weight:600}
+.film-item .meta{position:absolute;bottom:10px;left:10px;right:10px;text-align:center;color:var(--muted);font-size:12px}
+
+/* s-curve visual tilt - items will be transformed by JS per index to create S effect */
+
+/* slider controls */
+.slider-control{position:absolute;left:10px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:var(--muted);font-size:34px;cursor:pointer}
+.slider-control.right{left:unset;right:10px}
+
+/* smaller sections */
+.section{margin-top:26px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:14px;padding:18px;box-shadow:var(--card-shadow)}
+.section h2{margin:0 0 10px 0}
+
+/* Video tile */
+.video-tile{width:100%;height:160px;border-radius:12px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;position:relative}
+.video-tile video{width:100%;height:100%;object-fit:cover;display:block}
+
+/* deck of cards (photos page) */
+.deck{position:relative;width:100%;height:420px;display:flex;align-items:center;justify-content:center}
+.card{position:absolute;width:420px;height:300px;border-radius:14px;background-size:cover;background-position:center;box-shadow:var(--card-shadow);transition:transform .6s,opacity .4s}
+.card.small{width:320px;height:230px}
+.deck-controls{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.card .caption{position:absolute;left:16px;bottom:12px;background:rgba(0,0,0,0.4);padding:6px 10px;border-radius:8px}
+
+/* holder (bottom area to drop) */
+.holder-area{margin-top:18px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);display:flex;gap:12px;align-items:center;justify-content:center}
+.holder{min-height:120px;width:140px;border-radius:10px;border:2px dashed rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;padding:8px;background:rgba(255,255,255,0.02)}
+
+/* photobooth */
+.photobooth-grid{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.pb-left{flex:1;min-width:320px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:12px}
+.pb-right{width:420px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:12px}
+.preview-canvas{width:100%;border-radius:10px;display:block;background:#000}
+
+/* modal (popup TV player / gift / love letter / logout) */
+.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:140;visibility:hidden;opacity:0;transition:opacity .2s}
+.modal.open{visibility:visible;opacity:1}
+.modal .box{background:linear-gradient(180deg,#071426,#081d2a);padding:18px;border-radius:12px;max-width:920px;width:90%;box-shadow:var(--card-shadow)}
+.modal .box h3{margin:0 0 12px 0}
+.modal .controls{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+
+/* form controls */
+.input, textarea, select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.03);color:#fff}
+.small{width:auto;padding:8px 12px;border-radius:8px}
+
+/* responsive */
+@media (max-width:900px){
+  .film-hero{padding:12px}
+  .film-item{width:170px;height:200px}
+  .card{width:320px;height:220px}
+  .pb-right{width:100%}
+}
