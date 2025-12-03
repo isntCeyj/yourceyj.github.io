@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Yourceyj — Register</title>
+<title>Yourceyj — Home</title>
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -10,31 +10,33 @@
   <nav><a href="home.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
 </header>
 
-<div class="glass-wrap" style="max-width:520px;margin:120px auto">
-  <div class="brand-title">Create Account</div>
-  <p class="small">Make a simple local account for this browser</p>
+<main class="container">
+  <section class="film-hero">
+    <div class="film-title">Happy Monthsary ❤</div>
+    <div class="film-sub">A private collection of our memories — just for you.</div>
 
-  <div class="form-row"><input id="regName" class="input" placeholder="Display name"></div>
-  <div class="form-row"><input id="regEmail" class="input" placeholder="Email"></div>
-  <div class="form-row"><input id="regPass" class="input" placeholder="Password" type="password"></div>
+    <div class="film-wrap section">
+      <button class="slider-control left">‹</button>
+      <div class="film-track" id="filmTrack">
+        <div class="film-item" data-page="videos.html"><div class="icon">🎬</div><p>Videos</p><div class="film-meta">Upload & preview</div></div>
+        <div class="film-item" data-page="photos.html"><div class="icon">📸</div><p>Photos</p><div class="film-meta">Deck & collect</div></div>
+        <div class="film-item" data-page="photobooth.html"><div class="icon">🎞️</div><p>PhotoBooth</p><div class="film-meta">Make & download</div></div>
+        <div class="film-item" data-page="game1.html"><div class="icon">💌</div><p>Question</p><div class="film-meta">Play & open gift</div></div>
+        <div class="film-item" data-page="game2.html"><div class="icon">💖</div><p>Upload Game</p><div class="film-meta">Add memories</div></div>
+        <div class="film-item" data-page="game3.html"><div class="icon">🎭</div><p>Look-Alike</p><div class="film-meta">Cartoon & review</div></div>
+        <div class="film-item" data-page="loveletter.html"><div class="icon">✉️</div><p>Love Letter</p><div class="film-meta">Read my note</div></div>
+      </div>
+      <button class="slider-control right">›</button>
+    </div>
+  </section>
 
-  <div class="row">
-    <button id="regBtn" class="heart-btn">Register</button>
-    <a href="index.html" class="link-small">Back to login</a>
-  </div>
-</div>
+  <section class="section">
+    <h2>Quick preview</h2>
+    <p class="small">Recent uploads & highlights will appear here.</p>
+  </section>
+</main>
 
 <script src="assets/js/app.js"></script>
-<script>
-document.getElementById('regBtn').addEventListener('click', ()=>{
-  const name = document.getElementById('regName').value.trim();
-  const email = document.getElementById('regEmail').value.trim().toLowerCase();
-  const pass = document.getElementById('regPass').value;
-  if(!name||!email||!pass) return alert('Please fill all fields');
-  const res = AUTH.register(name,email,pass);
-  if(res.ok) { alert('Account created!'); location.href='index.html'; }
-  else alert(res.msg);
-});
-</script>
+<script>initFilmRoll();</script>
 </body>
 </html>
