@@ -1,13 +1,19 @@
 <!doctype html>
 <html>
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Yourceyj — Home</title>
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <header class="top-nav">
   <div class="brand"><div class="logo"></div><div style="font-weight:700;color:var(--accent);margin-left:8px">Yourceyj</div></div>
-  <nav><a href="home.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </nav>
 </header>
 
 <main class="container">
@@ -37,6 +43,21 @@
 </main>
 
 <script src="assets/js/app.js"></script>
-<script>initFilmRoll();</script>
+<script>
+const user = AUTH.getUser();
+if(!user) location.href='index.html'; // redirect to login if not logged in
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+  AUTH.logout(); location.href='index.html';
+});
+
+// Initialize film roll
+function initFilmRoll(){
+  const items = document.querySelectorAll('.film-item');
+  items.forEach(item=>{
+    item.addEventListener('click', ()=>{ location.href=item.dataset.page; });
+  });
+}
+initFilmRoll();
+</script>
 </body>
 </html>
