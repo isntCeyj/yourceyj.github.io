@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Yourceyj — PhotoBooth</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="top-nav">
+  <div class="logo"><div class="brand">Y</div><div style="margin-left:8px">Yourceyj</div></div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="section photobooth-grid">
+    <div class="pb-left">
+      <h2>PhotoBooth</h2>
+      <p class="small" style="color:var(--muted)">Upload a photo, choose a template, then preview & download.</p>
+      <div style="margin-top:12px">
+        <input id="pbUpload" type="file" accept="image/*" class="input">
+      </div>
+
+      <div style="margin-top:12px">
+        <label class="small" style="color:var(--muted)">Template</label>
+        <select id="pbTemplate" class="input">
+          <option value="none">None</option>
+          <!-- replace with your own overlay PNGs placed in assets/img/ -->
+          <option value="assets/img/frame1.png">Frame: Soft</option>
+          <option value="assets/img/frame2.png">Frame: Film</option>
+        </select>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button id="pbPreview" class="heart-btn">Preview</button>
+        <button id="pbDownload" class="heart-btn">Download</button>
+      </div>
+    </div>
+
+    <div class="pb-right">
+      <h3>Preview</h3>
+      <canvas id="pbCanvas" class="preview-canvas"></canvas>
+    </div>
+  </section>
+</main>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
