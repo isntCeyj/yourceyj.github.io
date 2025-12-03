@@ -30,10 +30,12 @@ document.getElementById('regBtn').addEventListener('click', ()=>{
   const name = document.getElementById('regName').value.trim();
   const email = document.getElementById('regEmail').value.trim().toLowerCase();
   const pass = document.getElementById('regPass').value;
-  if(!name||!email||!pass) return alert('Please fill all fields');
+  if(!name || !email || !pass) return alert('Please fill all fields');
   const res = AUTH.register(name,email,pass);
-  if(res.ok) { alert('Account created!'); location.href='index.html'; }
-  else alert(res.msg);
+  if(res.ok){
+    alert('Account created! Please login.');
+    location.href='index.html'; // redirect to login page
+  } else alert(res.msg);
 });
 </script>
 </body>
