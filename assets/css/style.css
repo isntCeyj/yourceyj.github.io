@@ -1,192 +1,102 @@
-/* General Styles */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #fff0f5;
-  color: #333;
+/* assets/css/style.css
+   Unified theme: glass + soft glow + portal accents
+*/
+:root{
+  --bg1: linear-gradient(180deg,#071224 0%, #0b2540 100%);
+  --accent:#ff6f91;
+  --accent-2:#ffd6e8;
+  --glass: rgba(255,255,255,0.06);
+  --muted: rgba(255,255,255,0.85);
+  --shadow: 0 12px 35px rgba(2,6,23,0.6);
+  --radius:16px; --maxW:1200px;
+  --glass-blur:10px;
 }
-a { text-decoration: none; }
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, "Segoe UI", Roboto, Arial;color:var(--muted);background:var(--bg1);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.top-nav{position:fixed;top:0;left:0;right:0;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06));border-bottom:1px solid rgba(255,255,255,0.02);z-index:90}
+.top-nav .brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#f97316);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:20px;box-shadow:var(--shadow)}
+.top-nav nav{display:flex;gap:18px}
+.top-nav nav a{padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--muted);font-weight:600}
+.top-nav nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
 
-/* Top Navigation */
-.top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 20px;
-  background: #ffe6f0;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.top-nav a {
-  margin: 0 10px;
-  color: #d6336c;
-  font-weight: bold;
-}
-.brand {
-  display: flex;
-  align-items: center;
-}
-.brand .logo {
-  width: 40px;
-  height: 40px;
-  background: #d6336c;
-  border-radius: 50%;
-}
-.brand span {
-  margin-left: 8px;
-  font-weight: 700;
-  color: #d6336c;
-}
+/* container */
+.container{max-width:var(--maxW);margin:110px auto 80px;padding:20px}
 
-/* Film Slider - Home Page */
-.film-wrap {
-  display: flex;
-  overflow-x: auto;
-  padding: 20px 10px;
-  gap: 15px;
-  scroll-behavior: smooth;
+/* GLASS CARD (login/register) - combines A,B,C styles */
+.glass-wrap{
+  width:100%;max-width:520px;margin:80px auto;padding:32px;border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  text-align:center;color:#fff;
+  border:1px solid rgba(255,255,255,0.04);
 }
-.film-item {
-  flex: 0 0 140px;
-  height: 140px;
-  background: #ffd6e8;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,.2);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-.film-item:hover { transform: scale(1.1); }
-.film-item .icon { font-size: 2em; margin-bottom: 8px; }
-.film-item p { margin: 0; font-weight: bold; }
-.film-item .film-meta { font-size: 0.8em; color: #555; }
+.brand-title{font-size:36px;color:var(--accent);letter-spacing:0.6px;text-shadow:0 6px 18px rgba(249,115,22,0.08)}
+.form-row{margin-top:18px}
+.input{width:86%;padding:12px;border-radius:12px;border:none;background:rgba(255,255,255,0.06);color:#fff;outline:none;font-size:15px}
+.row{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:16px}
+.heart-btn{position:relative;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--accent),#ff85a2);border:none;color:#fff;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(249,115,22,0.18)}
+.heart-btn:before{content:"❤";position:absolute;left:12px;top:10px;font-size:18px}
+.link-small{text-decoration:none;color:rgba(255,255,255,0.9);font-weight:600}
 
-/* Photo Deck & PhotoBooth */
-.photo-deck, .photobooth-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin: 40px auto;
-  max-width: 900px;
-}
-.photo-holder, .pb-canvas-holder {
-  display: grid;
-  gap: 10px;
-  justify-content: center;
-}
-.photo-holder img, .pb-canvas-holder canvas {
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
-  object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
+/* Home film roll */
+.film-hero{display:flex;flex-direction:column;align-items:center;gap:10px}
+.film-title{font-size:30px;color:#fff}
+.film-sub{color:rgba(255,255,255,0.8);font-size:14px}
+.film-wrap{position:relative;width:100%;height:260px;margin-top:14px}
+.film-track{display:flex;gap:18px;align-items:center;padding:20px;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.film-item{width:220px;height:240px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;cursor:pointer;border:1px solid rgba(255,255,255,0.03);transition:transform .25s}
+.film-item .icon{font-size:40px;margin-bottom:10px}
+.film-item p{margin:0;font-weight:700}
+.film-meta{font-size:12px;color:rgba(255,255,255,0.7);margin-top:8px}
 
-/* Templates Dropdown */
-.template-select, .num-pics-select {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #d6336c;
-  background: #fff0f5;
-  color: #d6336c;
-  font-weight: bold;
-}
+/* slider controls */
+.slider-control{position:absolute;left:8px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:var(--muted);font-size:36px;cursor:pointer;z-index:40}
+.slider-control.right{left:auto;right:8px}
 
-/* Video Page */
-.video-slider {
-  display: flex;
-  overflow-x: auto;
-  gap: 15px;
-  padding: 20px;
-}
-.video-box {
-  flex: 0 0 180px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #fff0f5;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  cursor: pointer;
-  text-align: center;
-}
-.video-box video {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-}
-.video-box p {
-  margin: 5px 0;
-  font-weight: bold;
-}
+/* sections */
+.section{margin-top:26px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.section h2{margin:0 0 10px 0}
 
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-.modal-content {
-  background: #fff0f5;
-  border-radius: 15px;
-  padding: 20px;
-  position: relative;
-  max-width: 90%;
-}
-.modal-content video, .modal-content canvas {
-  width: 100%;
-  max-height: 500px;
-  border-radius: 12px;
-}
-.modal-content button {
-  position: absolute;
-  top:10px;
-  right:10px;
-  background:#d6336c;
-  color:white;
-  border:none;
-  padding:8px 12px;
-  border-radius:8px;
-  cursor:pointer;
-}
+/* videos */
+.video-tiles{display:flex;gap:12px;flex-wrap:wrap}
+.video-tile{width:320px;height:180px;border-radius:12px;overflow:hidden;background:#000;position:relative;border:1px solid rgba(255,255,255,0.02)}
+.video-tile video{width:100%;height:100%;object-fit:cover}
+.tile-controls{position:absolute;left:8px;right:8px;bottom:8px;display:flex;justify-content:space-between;gap:8px}
 
-/* Trivia Game */
-.trivia-page {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:15px;
-  margin:30px auto;
-  max-width:600px;
-}
-.trivia-page h2 { color:#d6336c; }
-.trivia-page .option {
-  background:#ffd6e8;
-  border-radius:8px;
-  padding:10px;
-  width:100%;
-  cursor:pointer;
-  font-weight:bold;
-}
-.trivia-page .option:hover { background:#ff85a2; }
+/* photobooth */
+.photobooth-grid{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.pb-left{flex:1;min-width:320px;background:rgba(255,255,255,0.02);padding:14px;border-radius:12px}
+.pb-right{width:420px;background:rgba(255,255,255,0.02);padding:14px;border-radius:12px}
+.preview-canvas{width:100%;border-radius:10px;display:block;background:#000}
 
-/* Buttons */
-.btn {
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-  background:#d6336c;
-  color:white;
-  transition:0.3s;
-}
-.btn:hover { opacity:0.85; }
+/* deck */
+.deck{position:relative;width:100%;height:420px;display:flex;align-items:center;justify-content:center}
+.card{position:absolute;width:420px;height:300px;border-radius:14px;background-size:cover;background-position:center;box-shadow:var(--shadow);transition:transform .6s,opacity .4s}
+.card .caption{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,0.45);padding:6px 10px;border-radius:10px}
 
+/* holder */
+.holder-area{margin-top:18px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center;justify-content:center}
+.holder{min-height:120px;width:140px;border-radius:10px;border:2px dashed rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;padding:8px;background:rgba(255,255,255,0.01)}
+
+/* modal / gift / confetti */
+.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:160;visibility:hidden;opacity:0;transition:.2s}
+.modal.open{visibility:visible;opacity:1}
+.modal .box{background:linear-gradient(180deg,#071426,#081d2a);padding:22px;border-radius:12px;max-width:760px;width:92%;box-shadow:var(--shadow);text-align:center}
+.gift{width:150px;height:140px;margin:18px auto 8px;border-radius:12px;background:linear-gradient(180deg,#ff87a8,#ff6f91);display:flex;align-items:center;justify-content:center;font-size:36px;color:#fff;cursor:pointer;position:relative;box-shadow:0 20px 50px rgba(249,115,22,0.16)}
+.kiss{font-size:36px;color:#ffd6e8;margin-top:12px;display:none}
+.confetti-piece{position:fixed;pointer-events:none;z-index:9999}
+
+/* small helpers */
+.small{font-size:13px;color:rgba(255,255,255,0.8)}
+.hidden{display:none}
+
+/* responsive */
+@media (max-width:900px){
+  .film-item{width:170px;height:200px}
+  .card{width:320px;height:230px}
+  .pb-right{width:100%}
+  .container{margin-top:90px}
+}
