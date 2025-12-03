@@ -1,63 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home — For My Love</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Yourceyj — Home</title>
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <header class="top-nav">
-  <div class="logo">💖 My Love</div>
+  <div class="logo"><div class="brand">Y</div><div style="margin-left:8px">Yourceyj</div></div>
   <nav>
     <a href="home.html">Home</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
   </nav>
-  <div class="account-icon" id="accountBtn">👤</div>
 </header>
 
-<!-- Film Roll Slider -->
-<section class="film-slider">
-  <div class="slider-container" id="filmRoll">
-    <div class="slider-box" data-page="videos.html">🎬<p>Videos</p></div>
-    <div class="slider-box" data-page="photos.html">📸<p>Photos</p></div>
-    <div class="slider-box" data-page="photobooth.html">🎞️<p>PhotoBooth</p></div>
-    <div class="slider-box" data-page="game1.html">💌<p>Game1</p></div>
-    <div class="slider-box" data-page="game2.html">💖<p>Game2</p></div>
-    <div class="slider-box" data-page="game3.html">🎭<p>Game3</p></div>
-    <div class="slider-box" data-page="loveletter.html">💌<p>Love Letter</p></div>
-  </div>
-</section>
+<main class="container">
+  <section class="film-hero">
+    <div class="film-title">Happy Monthsary ❤</div>
+    <div class="film-sub">Welcome, this place is made only for you. Tap a reel to open.</div>
 
-<!-- Logout Modal -->
-<div id="logoutModal" class="modal">
-  <div class="modal-content">
-    <h2>Are you going to leave me, my love? 💖</h2>
-    <div class="modal-buttons">
-      <button id="logoutYes">Yes</button>
-      <button id="logoutNo">No</button>
-      <button id="logoutStay">I’m not gonna leave you</button>
+    <div class="film-wrap section">
+      <button class="slider-control left">‹</button>
+      <div class="film-track" id="filmTrack">
+        <!-- film items: update data-page to match pages -->
+        <div class="film-item" data-page="videos.html">
+          <div class="icon">🎬</div>
+          <p>Videos</p>
+          <div class="meta">Play clips / Preview</div>
+        </div>
+
+        <div class="film-item" data-page="photos.html">
+          <div class="icon">📸</div>
+          <p>Memories</p>
+          <div class="meta">Collect photos</div>
+        </div>
+
+        <div class="film-item" data-page="photobooth.html">
+          <div class="icon">🎞️</div>
+          <p>PhotoBooth</p>
+          <div class="meta">Make & download photos</div>
+        </div>
+
+        <div class="film-item" data-page="game1.html">
+          <div class="icon">💌</div>
+          <p>Question</p>
+          <div class="meta">Answer & gift</div>
+        </div>
+
+        <div class="film-item" data-page="game2.html">
+          <div class="icon">💖</div>
+          <p>Upload Game</p>
+          <div class="meta">Upload memories</div>
+        </div>
+
+        <div class="film-item" data-page="game3.html">
+          <div class="icon">🎭</div>
+          <p>Look-Alike</p>
+          <div class="meta">Cartoon & review</div>
+        </div>
+
+        <div class="film-item" data-page="loveletter.html">
+          <div class="icon">✉️</div>
+          <p>Love Letter</p>
+          <div class="meta">Read my message</div>
+        </div>
+      </div>
+      <button class="slider-control right">›</button>
     </div>
-  </div>
-</div>
+  </section>
+
+  <section class="section">
+    <h2>Quick Preview</h2>
+    <p class="small" style="color:var(--muted)">Recent items and actions appear here. Use the film reel above to navigate the whole site.</p>
+  </section>
+</main>
 
 <script src="assets/js/app.js"></script>
-<script>
-// Film Roll Slider Navigation
-document.querySelectorAll('.slider-box').forEach(box=>{
-  box.addEventListener('click',()=>location.href=box.dataset.page);
-});
-
-// Logout Modal
-const logoutModal=document.getElementById('logoutModal');
-const accountBtn=document.getElementById('accountBtn');
-accountBtn.addEventListener('click',()=>logoutModal.style.display='flex');
-document.getElementById('logoutYes').addEventListener('click',()=>{
-  AUTH.logout(); location.href='index.html';
-});
-document.getElementById('logoutNo').addEventListener('click',()=>logoutModal.style.display='none');
-document.getElementById('logoutStay').addEventListener('click',()=>window.close());
-</script>
 </body>
 </html>
