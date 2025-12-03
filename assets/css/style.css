@@ -1,117 +1,102 @@
 /* assets/css/style.css
-   Unified professional + romantic UI
+   Unified theme: glass + soft glow + portal accents
 */
 :root{
   --bg1: linear-gradient(180deg,#071224 0%, #0b2540 100%);
   --accent:#ff6f91;
   --accent-2:#ffd6e8;
   --glass: rgba(255,255,255,0.06);
-  --muted: rgba(255,255,255,0.78);
-  --card-shadow: 0 12px 35px rgba(2,6,23,0.6);
-  --radius:16px;
-  --maxW:1200px;
-  font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial;
+  --muted: rgba(255,255,255,0.85);
+  --shadow: 0 12px 35px rgba(2,6,23,0.6);
+  --radius:16px; --maxW:1200px;
+  --glass-blur:10px;
 }
 *{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  color:#fff;
-  background: var(--bg1);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  line-height:1.4;
-}
+html,body{height:100%;margin:0;font-family:Inter, "Segoe UI", Roboto, Arial;color:var(--muted);background:var(--bg1);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.top-nav{position:fixed;top:0;left:0;right:0;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06));border-bottom:1px solid rgba(255,255,255,0.02);z-index:90}
+.top-nav .brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#f97316);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:20px;box-shadow:var(--shadow)}
+.top-nav nav{display:flex;gap:18px}
+.top-nav nav a{padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--muted);font-weight:600}
+.top-nav nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
 
-/* NAV */
-.top-nav{
-  height:68px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 28px;
-  position:fixed;
-  left:0;right:0;top:0;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
-  border-bottom:1px solid rgba(255,255,255,0.03);
-  z-index:60;
-}
-.top-nav .logo{display:flex;align-items:center;gap:12px}
-.top-nav .logo .brand{
-  width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#f97316);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:20px;box-shadow:var(--card-shadow)
-}
-.top-nav nav{display:flex;gap:18px;align-items:center}
-.top-nav nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px}
-.top-nav nav a:hover{background:var(--glass);color:#fff}
+/* container */
+.container{max-width:var(--maxW);margin:110px auto 80px;padding:20px}
 
-/* Container */
-.container{max-width:var(--maxW);margin:110px auto 60px;padding:20px}
-
-/* Hero / film roll S slider */
-.film-hero{
-  display:flex;flex-direction:column;gap:18px;align-items:center;
+/* GLASS CARD (login/register) - combines A,B,C styles */
+.glass-wrap{
+  width:100%;max-width:520px;margin:80px auto;padding:32px;border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  text-align:center;color:#fff;
+  border:1px solid rgba(255,255,255,0.04);
 }
-.film-title{font-size:28px;margin-bottom:6px}
-.film-sub{color:rgba(255,255,255,0.75);font-size:14px;margin-bottom:14px}
+.brand-title{font-size:36px;color:var(--accent);letter-spacing:0.6px;text-shadow:0 6px 18px rgba(249,115,22,0.08)}
+.form-row{margin-top:18px}
+.input{width:86%;padding:12px;border-radius:12px;border:none;background:rgba(255,255,255,0.06);color:#fff;outline:none;font-size:15px}
+.row{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:16px}
+.heart-btn{position:relative;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--accent),#ff85a2);border:none;color:#fff;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(249,115,22,0.18)}
+.heart-btn:before{content:"❤";position:absolute;left:12px;top:10px;font-size:18px}
+.link-small{text-decoration:none;color:rgba(255,255,255,0.9);font-weight:600}
 
-/* film roll wrapper */
-.film-wrap{position:relative;width:100%;height:260px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:14px}
-.film-track{display:flex;gap:20px;align-items:center;transition:transform .45s cubic-bezier(.2,.8,.2,1);will-change:transform;padding:20px}
-.film-item{
-  width:220px;height:240px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  box-shadow:var(--card-shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;cursor:pointer;position:relative;transform-origin:center;transition:transform .3s, box-shadow .3s;
-  border:1px solid rgba(255,255,255,0.03);
-}
+/* Home film roll */
+.film-hero{display:flex;flex-direction:column;align-items:center;gap:10px}
+.film-title{font-size:30px;color:#fff}
+.film-sub{color:rgba(255,255,255,0.8);font-size:14px}
+.film-wrap{position:relative;width:100%;height:260px;margin-top:14px}
+.film-track{display:flex;gap:18px;align-items:center;padding:20px;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.film-item{width:220px;height:240px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;cursor:pointer;border:1px solid rgba(255,255,255,0.03);transition:transform .25s}
 .film-item .icon{font-size:40px;margin-bottom:10px}
-.film-item p{margin:0;font-weight:600}
-.film-item .meta{position:absolute;bottom:10px;left:10px;right:10px;text-align:center;color:var(--muted);font-size:12px}
-
-/* s-curve visual tilt - items will be transformed by JS per index to create S effect */
+.film-item p{margin:0;font-weight:700}
+.film-meta{font-size:12px;color:rgba(255,255,255,0.7);margin-top:8px}
 
 /* slider controls */
-.slider-control{position:absolute;left:10px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:var(--muted);font-size:34px;cursor:pointer}
-.slider-control.right{left:unset;right:10px}
+.slider-control{position:absolute;left:8px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:var(--muted);font-size:36px;cursor:pointer;z-index:40}
+.slider-control.right{left:auto;right:8px}
 
-/* smaller sections */
-.section{margin-top:26px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:14px;padding:18px;box-shadow:var(--card-shadow)}
+/* sections */
+.section{margin-top:26px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
 .section h2{margin:0 0 10px 0}
 
-/* Video tile */
-.video-tile{width:100%;height:160px;border-radius:12px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;position:relative}
-.video-tile video{width:100%;height:100%;object-fit:cover;display:block}
-
-/* deck of cards (photos page) */
-.deck{position:relative;width:100%;height:420px;display:flex;align-items:center;justify-content:center}
-.card{position:absolute;width:420px;height:300px;border-radius:14px;background-size:cover;background-position:center;box-shadow:var(--card-shadow);transition:transform .6s,opacity .4s}
-.card.small{width:320px;height:230px}
-.deck-controls{display:flex;gap:10px;justify-content:center;margin-top:14px}
-.card .caption{position:absolute;left:16px;bottom:12px;background:rgba(0,0,0,0.4);padding:6px 10px;border-radius:8px}
-
-/* holder (bottom area to drop) */
-.holder-area{margin-top:18px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);display:flex;gap:12px;align-items:center;justify-content:center}
-.holder{min-height:120px;width:140px;border-radius:10px;border:2px dashed rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;padding:8px;background:rgba(255,255,255,0.02)}
+/* videos */
+.video-tiles{display:flex;gap:12px;flex-wrap:wrap}
+.video-tile{width:320px;height:180px;border-radius:12px;overflow:hidden;background:#000;position:relative;border:1px solid rgba(255,255,255,0.02)}
+.video-tile video{width:100%;height:100%;object-fit:cover}
+.tile-controls{position:absolute;left:8px;right:8px;bottom:8px;display:flex;justify-content:space-between;gap:8px}
 
 /* photobooth */
 .photobooth-grid{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
-.pb-left{flex:1;min-width:320px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:12px}
-.pb-right{width:420px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:12px}
+.pb-left{flex:1;min-width:320px;background:rgba(255,255,255,0.02);padding:14px;border-radius:12px}
+.pb-right{width:420px;background:rgba(255,255,255,0.02);padding:14px;border-radius:12px}
 .preview-canvas{width:100%;border-radius:10px;display:block;background:#000}
 
-/* modal (popup TV player / gift / love letter / logout) */
-.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:140;visibility:hidden;opacity:0;transition:opacity .2s}
-.modal.open{visibility:visible;opacity:1}
-.modal .box{background:linear-gradient(180deg,#071426,#081d2a);padding:18px;border-radius:12px;max-width:920px;width:90%;box-shadow:var(--card-shadow)}
-.modal .box h3{margin:0 0 12px 0}
-.modal .controls{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+/* deck */
+.deck{position:relative;width:100%;height:420px;display:flex;align-items:center;justify-content:center}
+.card{position:absolute;width:420px;height:300px;border-radius:14px;background-size:cover;background-position:center;box-shadow:var(--shadow);transition:transform .6s,opacity .4s}
+.card .caption{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,0.45);padding:6px 10px;border-radius:10px}
 
-/* form controls */
-.input, textarea, select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.03);color:#fff}
-.small{width:auto;padding:8px 12px;border-radius:8px}
+/* holder */
+.holder-area{margin-top:18px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center;justify-content:center}
+.holder{min-height:120px;width:140px;border-radius:10px;border:2px dashed rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;padding:8px;background:rgba(255,255,255,0.01)}
+
+/* modal / gift / confetti */
+.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:160;visibility:hidden;opacity:0;transition:.2s}
+.modal.open{visibility:visible;opacity:1}
+.modal .box{background:linear-gradient(180deg,#071426,#081d2a);padding:22px;border-radius:12px;max-width:760px;width:92%;box-shadow:var(--shadow);text-align:center}
+.gift{width:150px;height:140px;margin:18px auto 8px;border-radius:12px;background:linear-gradient(180deg,#ff87a8,#ff6f91);display:flex;align-items:center;justify-content:center;font-size:36px;color:#fff;cursor:pointer;position:relative;box-shadow:0 20px 50px rgba(249,115,22,0.16)}
+.kiss{font-size:36px;color:#ffd6e8;margin-top:12px;display:none}
+.confetti-piece{position:fixed;pointer-events:none;z-index:9999}
+
+/* small helpers */
+.small{font-size:13px;color:rgba(255,255,255,0.8)}
+.hidden{display:none}
 
 /* responsive */
 @media (max-width:900px){
-  .film-hero{padding:12px}
   .film-item{width:170px;height:200px}
-  .card{width:320px;height:220px}
+  .card{width:320px;height:230px}
   .pb-right{width:100%}
+  .container{margin-top:90px}
 }
