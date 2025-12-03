@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Yourceyj — Login</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yourceyj — Login</title>
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <header class="top-nav">
@@ -34,7 +34,7 @@ document.getElementById('loginBtn').addEventListener('click', ()=>{
   const e = document.getElementById('loginEmail').value.trim().toLowerCase();
   const p = document.getElementById('loginPass').value;
   const r = AUTH.login(e,p);
-  if(r.ok) location.href='home.html';
+  if(r.ok) location.href='home.html'; // redirect to home after login
   else alert(r.msg || 'Login failed');
 });
 </script>
